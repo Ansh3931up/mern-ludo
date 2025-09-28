@@ -1,3 +1,4 @@
+###(By:Ansh Kumar) Changes : Defined at bottom
 <h1  align="center">Online Multiplayer Ludo Game </h1>
 
 Ludo Online is a multiplayer web-based implementation of the classic board game Ludo, built using the MERN stack and integrated with SocketIO for real-time communication.
@@ -240,3 +241,111 @@ This will show all locations where changes were documented using the `//Changes 
 ---
 
 *All changes are documented with `//Changes :` comments throughout the codebase for easy tracking and maintenance.*
+
+---
+
+## 🎯 **QreateAI Internship Assignment Submission**
+
+### **Project Overview**
+This project extends the base multiplayer Ludo game with a comprehensive real-time scoring system and mobile-responsive UI improvements.
+
+### **Implementation Summary**
+
+#### ✅ **Real-Time Scoring System**
+- **Pawn Progress Scoring**: Each pawn earns points equal to dice value when moved
+- **Capture System**: When pawns capture opponents, striker gains victim's score, victim resets to 0
+- **Player Total Score**: Sum of all pawn scores for each player
+- **Real-time Updates**: Scores broadcast to all players via Socket.IO
+
+#### ✅ **Backend Enhancements**
+- Extended Pawn model with `score` field (default: 0)
+- Added scoring methods: `addScore()`, `resetScore()`, `getScore()`
+- Implemented capture logic with score transfer
+- Created centralized scoring handler for modularity
+- Added real-time score broadcasting via Socket.IO
+
+#### ✅ **Frontend Improvements**
+- Real-time scoreboard with live updates
+- Mobile-responsive design with collapsible sidebar
+- Performance optimization using `useMemo` for sorting
+- Enhanced UI/UX with smooth animations and touch-friendly interactions
+
+#### ✅ **Mobile Responsiveness**
+- Sidebar transforms to full-screen overlay on mobile
+- Touch-optimized toggle button with trophy icon
+- Horizontal scrolling player cards on mobile
+- Responsive layout that adapts to screen size
+
+### **Technical Implementation Details**
+
+#### **Scoring Logic**
+```javascript
+// Pawn movement scoring
+pawn.addScore(diceValue);
+
+// Capture scoring
+attackingPawn.addScore(victimScore);
+victimPawn.resetScore();
+```
+
+#### **Real-time Communication**
+- `game:scores` event for broadcasting score updates
+- Automatic score synchronization across all clients
+- Live scoreboard updates without page refresh
+
+#### **Performance Optimizations**
+- `useMemo` for expensive sorting operations
+- Efficient re-rendering with proper dependency arrays
+- Modular scoring system following DRY principles
+
+### **Files Modified**
+- `backend/models/pawn.js` - Added scoring methods
+- `backend/models/player.js` - Added totalScore field
+- `backend/handlers/gameHandler.js` - Integrated scoring with moves
+- `backend/handlers/scoringHandler.js` - Centralized scoring logic
+- `backend/tests/schemas/room.test.js` - Enhanced test coverage
+- `src/components/ScoreBoard/ScoreBoard.jsx` - Real-time scoreboard
+- `src/components/Gameboard/Gameboard.jsx` - Mobile responsiveness
+- Various CSS files for mobile optimization
+
+### **Testing & Quality Assurance**
+- Comprehensive unit tests for pawn scoring methods
+- Real-time functionality testing with multiple clients
+- Mobile responsiveness testing across different screen sizes
+- Error handling and graceful degradation
+
+### **Submission Information**
+- **GitHub Repository**: [Your Forked Repo Link]
+- **Branch**: `main`
+- **Implementation Status**: ✅ Complete
+- **Features Implemented**: 
+  - ✅ Real-time scoring system
+  - ✅ Mobile responsive UI
+  - ✅ Performance optimizations
+  - ✅ Enhanced test coverage
+  - ✅ Comprehensive documentation
+
+### **Demo Instructions**
+1. Clone the repository
+2. Install dependencies: `npm install` (both root and backend)
+3. Create `.env` file in backend with `PORT=8080`
+4. Start backend: `cd backend && npm run dev`
+5. Start frontend: `npm start`
+6. Open multiple browser tabs to test multiplayer functionality
+7. Test scoring system by moving pawns and capturing opponents
+8. Test mobile responsiveness by resizing browser or using mobile device
+
+### **Interview Preparation**
+I'm ready to discuss:
+- Scoring system architecture and implementation
+- Real-time synchronization challenges and solutions
+- Mobile responsive design decisions
+- Performance optimization strategies
+- Code quality and maintainability improvements
+- Future enhancements and scalability considerations
+
+---
+
+**Developed by: Ansh Kumar**  
+**For: QreateAI Full Stack Developer Intern Position**  
+**Assignment: Multiplayer Ludo with Real-Time Scoring System**

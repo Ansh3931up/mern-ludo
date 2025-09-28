@@ -5,7 +5,7 @@ const sendToPlayersRolledNumber = (id, rolledNumber) => {
 };
 
 const sendToPlayersData = room => {
-    socketManager.getIO().to(room._id.toString()).emit('room:data', JSON.stringify(room));
+    socketManager.getIO().to(room?._id.toString()).emit('room:data', JSON.stringify(room));
 };
 
 const sendToOnePlayerData = (id, room) => {
