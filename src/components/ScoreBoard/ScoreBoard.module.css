@@ -1,0 +1,257 @@
+.scoreboard {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 250px;
+    height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 20px;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.header h3 {
+    margin: 0;
+    font-size: 1.4rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.playersList {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.playerRow {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.playerRow:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateX(-5px);
+}
+
+.playerRow:first-child {
+    background: linear-gradient(135deg, #ffd700, #ffed4e);
+    color: #333;
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+}
+
+.playerRow:first-child::before {
+    content: "👑";
+    position: absolute;
+    left: -10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+}
+
+.rank {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-right: 12px;
+    min-width: 25px;
+    text-align: center;
+}
+
+.playerInfo {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.playerName {
+    font-size: 0.9rem;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.playerColor {
+    font-size: 0.75rem;
+    opacity: 0.8;
+    font-weight: 500;
+}
+
+.score {
+    font-size: 1.1rem;
+    font-weight: bold;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 4px 8px;
+    border-radius: 12px;
+    min-width: 40px;
+    text-align: center;
+}
+
+.footer {
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 2px solid rgba(255, 255, 255, 0.3);
+    text-align: center;
+}
+
+.totalPlayers {
+    font-size: 0.8rem;
+    opacity: 0.8;
+}
+
+/* Color themes for different players */
+.red {
+    border-left: 4px solid #ff4757;
+}
+
+.blue {
+    border-left: 4px solid #3742fa;
+}
+
+.green {
+    border-left: 4px solid #2ed573;
+}
+
+.yellow {
+    border-left: 4px solid #ffa502;
+}
+
+.default {
+    border-left: 4px solid #747d8c;
+}
+
+/*Changes : Mobile responsive design */
+.scoreboard.mobile {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 1000;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    overflow-y: auto;
+}
+
+.scoreboard.mobile.mobileOpen {
+    transform: translateX(0);
+}
+
+/*Changes : Mobile backdrop overlay */
+.scoreboard.mobile::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease-in-out;
+    z-index: -1;
+}
+
+.scoreboard.mobile.mobileOpen::before {
+    opacity: 1;
+    visibility: visible;
+}
+
+/*Changes : Mobile close button */
+.mobileClose {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.mobileClose:hover {
+    background: rgba(255, 255, 255, 0.3);
+    transform: scale(1.1);
+}
+
+/*Changes : Mobile header adjustments */
+.scoreboard.mobile .header {
+    position: relative;
+    padding-right: 60px; /* Space for close button */
+}
+
+/*Changes : Mobile player rows */
+.scoreboard.mobile .playerRow {
+    padding: 15px;
+    margin: 8px 20px;
+    border-radius: 12px;
+}
+
+.scoreboard.mobile .playerName {
+    font-size: 1rem;
+}
+
+.scoreboard.mobile .score {
+    font-size: 1.2rem;
+    padding: 6px 12px;
+}
+
+/*Changes : Desktop responsive design */
+@media (max-width: 768px) {
+    .scoreboard:not(.mobile) {
+        width: 200px;
+        padding: 15px;
+    }
+    
+    .header h3 {
+        font-size: 1.2rem;
+    }
+    
+    .playerRow {
+        padding: 8px;
+    }
+    
+    .playerName {
+        font-size: 0.8rem;
+    }
+    
+    .score {
+        font-size: 1rem;
+        padding: 3px 6px;
+    }
+}
+
+@media (max-width: 480px) {
+    .scoreboard:not(.mobile) {
+        width: 180px;
+        padding: 10px;
+    }
+}

@@ -6,6 +6,7 @@ const PawnSchema = new Schema({
     color: String,
     basePos: Number,
     position: Number,
+    score: { type: Number, default: 0 } //Changes : added the score field in this schema with default value
 });
 
 PawnSchema.methods.canMove = function (rolledNumber) {
@@ -18,7 +19,22 @@ PawnSchema.methods.canMove = function (rolledNumber) {
     }
     return false;
 };
+//Changes : add the points to the score of the pawn
+PawnSchema.methods.addScore=function(points){
+    this.score += points;
+}
 
+//Changes : reset the score of the pawn (when another pawn overlap)
+PawnSchema.methods.resetScore=function(){
+    this.score = 0;
+}
+
+//Changes : getScore
+PawnSchema.methods.getScore=function(){
+    return this.score;
+}
+
+// get the position of the pawn after the move
 PawnSchema.methods.getPositionAfterMove = function (rolledNumber) {
     const { position, color } = this;
     switch (color) {
@@ -76,6 +92,9 @@ PawnSchema.methods.getPositionAfterMove = function (rolledNumber) {
             } else {
                 return position;
             }
+            //Changes : added a default statement  
+        default:
+            return position;
     }
 };
 

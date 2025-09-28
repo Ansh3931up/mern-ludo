@@ -1,6 +1,7 @@
 const { getRoom, updateRoom } = require('../services/roomService');
-const { sendToPlayersRolledNumber, sendWinner } = require('../socket/emits');
+const { sendToPlayersRolledNumber, sendWinner, sendToPlayersScores } = require('../socket/emits');//Changes :added sendToPlayersScores
 const { rollDice, isMoveValid } = require('./handlersFunctions');
+const scoringHelpers = require('./scoringHandler');//Changes : added the helper function to make code clean and use the DRY(Don't Repeat Yourself Principle)
 
 module.exports = socket => {
     const req = socket.request;
@@ -10,9 +11,25 @@ module.exports = socket => {
         if (room.winner) return;
         const pawn = room.getPawn(pawnId);
         if (isMoveValid(req.session, pawn, room)) {
+            //Changes : Add score to the moved pawn
+       
+            pawn.addScore(room.rolledNumber);
+          
+            
             const newPositionOfMovedPawn = pawn.getPositionAfterMove(room.rolledNumber);
             room.changePositionOfPawn(pawn, newPositionOfMovedPawn);
-            room.beatPawns(newPositionOfMovedPawn, req.session.color);
+            room.beatPawns(newPositionOfMovedPawn, req.session.color, pawn._id.toString());
+            
+            //Changes : Update player total scores after the pawn score get updated
+            room.players.forEach(player => {
+                scoringHelpers.updatePlayerTotalScore(room, player._id.toString());
+            });
+            
+            //Changes : Send updated scores to all players after the player score updation
+            const scores = scoringHelpers.getAllPlayerScores(room);
+     
+            sendToPlayersScores(room._id.toString(), scores);
+            
             room.changeMovingPlayer();
             const winner = room.getWinner();
             if (winner) {

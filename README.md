@@ -73,3 +73,170 @@ node server.js
 ![Interface](https://github.com/Wenszel/mern-ludo/blob/main/src/images/lobby.png?raw=true)
 
 ![Interface](https://github.com/Wenszel/mern-ludo/blob/main/src/images/winner.png?raw=true)
+
+---
+
+## 🚀 Recent Updates and Improvements (By:Ansh Kumar)
+
+### Initialization Setup
+
+#### Backend Environment Configuration
+1. **Create `.env` file in the backend directory:**
+   ```bash
+   cd backend
+   touch .env
+   ```
+
+2. **Add the following environment variables to `backend/.env`:**
+   ```env
+   PORT=8080
+   NODE_ENV=development
+   MONGODB_URI=your_mongodb_connection_string_here
+   ```
+
+3. **Start the backend server:**
+   ```bash
+   cd backend
+   npm run test 
+   <!-- added dev and start in script -->
+   npm run dev
+   # or
+   npm start
+   ```
+
+### 🔍 Finding All Changes Made
+
+To view all the modifications and improvements made to the codebase, search for:
+```bash
+grep -r "//Changes :" .
+```
+
+This will show all locations where changes were documented using the `//Changes :` comment pattern.
+
+---
+
+## 📋 Summary of Changes and Optimizations
+
+### 🎯 Backend Improvements
+
+#### 1. **Server Configuration (`backend/server.js`)**
+- ✅ Added fallback PORT configuration (`PORT=8080`)
+- ✅ Added server startup logging for better debugging
+- ✅ Enhanced error handling and server initialization
+
+#### 2. **Package Management (`backend/package.json`)**
+- ✅ Added `dev` and `start` scripts for easier development
+- ✅ Improved npm script organization
+
+#### 3. **Pawn Schema Enhancements (`backend/models/pawn.js`)**
+- ✅ Added `score` field with default value 0
+- ✅ Implemented `addScore(points)` method for score management
+- ✅ Added `resetScore()` method for score reset functionality
+- ✅ Created `getScore()` method for score retrieval
+- ✅ Enhanced `getPositionAfterMove()` with default case handling
+
+#### 4. **Player Schema Updates (`backend/models/player.js`)**
+- ✅ Added `totalScore` field for tracking player's cumulative score
+
+#### 5. **Game Handler Optimizations (`backend/handlers/gameHandler.js`)**
+- ✅ Integrated scoring system with pawn movement
+- ✅ Added real-time score updates using Socket.IO
+- ✅ Implemented DRY principle with scoring helpers
+- ✅ Enhanced move validation and score calculation
+
+#### 6. **Scoring System (`backend/handlers/scoringHandler.js`)**
+- ✅ Created centralized scoring logic
+- ✅ Implemented player total score calculation
+- ✅ Added score aggregation and distribution methods
+
+#### 7. **Test Improvements (`backend/tests/schemas/room.test.js`)**
+- ✅ Refactored tests to use pawn schema methods instead of duplicate logic
+- ✅ Added comprehensive pawn method tests (getScore, addScore, resetScore, canMove)
+- ✅ Implemented proper score initialization in test setup
+- ✅ Enhanced test coverage for pawn functionality
+
+### 🎨 Frontend Optimizations
+
+#### 1. **Gameboard Component (`src/components/Gameboard/Gameboard.jsx`)**
+- ✅ Integrated ScoreBoard component for real-time score display
+- ✅ Enhanced component structure and imports
+
+#### 2. **Map Component Improvements (`src/components/Gameboard/Map/Map.jsx`)**
+- ✅ Enhanced canvas error handling with try-catch blocks
+- ✅ Improved touchable area validation for pawns
+- ✅ Fixed overlapping pawn rendering logic
+- ✅ Optimized pawn positioning and interaction
+- ✅ Added graceful error handling for canvas operations
+
+#### 3. **ScoreBoard Component (`src/components/ScoreBoard/ScoreBoard.jsx`)**
+- ✅ **Performance Optimization**: Implemented `useMemo` for sorted players array
+- ✅ Added real-time score updates via Socket.IO
+- ✅ Enhanced score display with proper sorting
+- ✅ Optimized re-rendering with memoized calculations
+
+### 🧪 Testing Enhancements
+
+#### 1. **Room Model Tests**
+- ✅ Comprehensive testing of pawn schema methods
+- ✅ Score management functionality tests
+- ✅ Movement validation tests
+- ✅ Position calculation tests
+
+#### 2. **Code Quality Improvements**
+- ✅ Applied DRY (Don't Repeat Yourself) principle
+- ✅ Enhanced error handling throughout the application
+- ✅ Improved code maintainability and readability
+
+### 🚀 Performance Optimizations
+
+1. **Frontend Performance:**
+   - ✅ Used `useMemo` hook for expensive sorting operations
+   - ✅ Optimized re-rendering cycles
+   - ✅ Enhanced canvas rendering efficiency
+
+2. **Backend Performance:**
+   - ✅ Centralized scoring logic to reduce code duplication
+   - ✅ Optimized database operations
+   - ✅ Improved real-time communication efficiency
+
+### 🔧 Development Experience
+
+1. **Better Debugging:**
+   - ✅ Added comprehensive logging
+   - ✅ Enhanced error messages
+   - ✅ Improved development server setup
+
+2. **Code Organization:**
+   - ✅ Consistent change documentation with `//Changes :` comments
+   - ✅ Modular scoring system implementation
+   - ✅ Enhanced test coverage and structure
+
+---
+
+## 🎮 New Features Added
+
+### Real-time Scoring System
+- Players now accumulate points based on dice rolls
+- Scores are transferred when pawns capture opponents
+- Real-time score updates across all connected clients
+- Persistent score tracking throughout the game
+
+### Enhanced Game Logic
+- Improved pawn movement validation
+- Better handling of overlapping pawns
+- Enhanced canvas interaction and error handling
+- Optimized game state management
+
+---
+
+## 🔧 Technical Debt Addressed
+
+1. **Code Duplication:** Eliminated duplicate logic between schemas and tests
+2. **Error Handling:** Added comprehensive error handling for canvas operations
+3. **Performance:** Optimized sorting and rendering operations
+4. **Maintainability:** Improved code organization and documentation
+5. **Testing:** Enhanced test coverage and reliability
+
+---
+
+*All changes are documented with `//Changes :` comments throughout the codebase for easy tracking and maintenance.*

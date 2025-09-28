@@ -19,6 +19,10 @@ const sendToOnePlayerRooms = (id, rooms) => {
 const sendWinner = (id, winner) => {
     socketManager.getIO().to(id).emit('game:winner', winner);
 };
+//Changes : Added a new function to send the scores to the players
+const sendToPlayersScores = (id, scores) => {
+    socketManager.getIO().to(id).emit('game:scores', scores);
+};
 
 module.exports = {
     sendToPlayersData,
@@ -26,4 +30,5 @@ module.exports = {
     sendToOnePlayerData,
     sendToOnePlayerRooms,
     sendWinner,
+    sendToPlayersScores,
 };

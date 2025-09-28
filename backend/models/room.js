@@ -35,11 +35,30 @@ const RoomSchema = new mongoose.Schema({
     },
 });
 
-RoomSchema.methods.beatPawns = function (position, attackingPawnColor) {
+RoomSchema.methods.beatPawns = function (position, attackingPawnColor, attackingPawnId = null) {
     const pawnsOnPosition = this.pawns.filter(pawn => pawn.position === position);
+    
+    // Find the attacking pawn - either by ID if provided, or by color and position
+    let attackingPawn = null;
+    if (attackingPawnId) {
+        attackingPawn = this.getPawn(attackingPawnId);
+    } else {
+        // Fallback: find by color and position (but this might not be unique)
+        attackingPawn = this.pawns.find(pawn => pawn.color === attackingPawnColor && pawn.position === position);
+    }
+    
     pawnsOnPosition.forEach(pawn => {
         if (pawn.color !== attackingPawnColor) {
             const index = this.getPawnIndex(pawn._id);
+            
+            // Transfer score from victim to attacker
+            if (attackingPawn) {
+                const victimScore = this.pawns[index].getScore();
+                attackingPawn.addScore(victimScore);
+            }
+            
+            // Reset victim score and position
+            this.pawns[index].resetScore();
             this.pawns[index].position = this.pawns[index].basePos;
         }
     });

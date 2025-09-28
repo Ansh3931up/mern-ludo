@@ -60,6 +60,28 @@ canvas {
     justify-items: center;
     grid-template-columns: 230px 230px;
     grid-template-rows: 50px 250px 250px 50px;
+     /*Changes : Space for sidebar */
+}
+
+/*Changes : Mobile responsive container */
+@media (max-width: 768px) {
+    .container {
+      
+        margin-right: 0; /* Remove sidebar margin on mobile */
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+        gap: 20px;
+        padding: 10px;
+    }
+    
+    .canvas-container {
+
+        grid-column: 1;
+        grid-row: 2;
+        max-width: 100%;
+        width: 100%;
+        height: auto;
+    }
 }
 
 .canvas-container {
@@ -133,4 +155,17 @@ button:hover {
 *::-webkit-scrollbar-thumb {
     background-color: #ffffff;
     border-radius: 10px;
+}
+
+/*Changes : Responsive design for sidebar */
+@media (max-width: 768px) {
+    .container {
+        margin-right: 200px; /*Changes : Smaller sidebar on mobile */
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        margin-right: 180px; /*Changes : Even smaller sidebar on small mobile */
+    }
 }

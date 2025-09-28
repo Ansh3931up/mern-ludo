@@ -5,6 +5,7 @@ import useSocketData from '../../hooks/useSocketData';
 import Map from './Map/Map';
 import Navbar from '../Navbar/Navbar';
 import Overlay from '../Overlay/Overlay';
+import ScoreBoard from '../ScoreBoard/ScoreBoard'; //Changes : Import ScoreBoard component
 import styles from './Gameboard.module.css';
 import trophyImage from '../../images/trophy.webp';
 
@@ -23,6 +24,10 @@ const Gameboard = () => {
     const [movingPlayer, setMovingPlayer] = useState('red');
 
     const [winner, setWinner] = useState(null);
+    
+    //Changes : Mobile responsive state for sidebar
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
+    const [sidebarOpen, setSidebarOpen] = useState(false);
 
     useEffect(() => {
         socket.emit('room:data', context.roomId);
@@ -61,6 +66,20 @@ const Gameboard = () => {
 
     }, [socket, context.playerId, context.roomId, setRolledNumber]);
 
+    //Changes : Handle window resize for mobile responsiveness
+    useEffect(() => {
+        const handleResize = () => {
+            const mobile = window.innerWidth <= 768;
+            setIsMobile(mobile);
+            if (!mobile) {
+                setSidebarOpen(false); // Close sidebar when switching to desktop
+            }
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
     return (
         <>
             {pawns.length === 16 ? (
@@ -76,6 +95,23 @@ const Gameboard = () => {
                         ended={winner !== null}
                     />
                     <Map pawns={pawns} nowMoving={nowMoving} rolledNumber={rolledNumber} />
+                    
+                    {/*Changes : Mobile sidebar toggle button */}
+                    {isMobile && (
+                        <button 
+                            className={styles.mobileToggle}
+                            onClick={() => setSidebarOpen(!sidebarOpen)}
+                            aria-label="Toggle leaderboard"
+                        >
+                            🏆 {sidebarOpen ? 'Hide' : 'Show'} Scores
+                        </button>
+                    )}
+                    
+                    <ScoreBoard 
+                        isMobile={isMobile} 
+                        isOpen={sidebarOpen} 
+                        onClose={() => setSidebarOpen(false)} 
+                    /> {/*Changes : Add mobile responsive props to ScoreBoard */}
                 </div>
             ) : (
                 <ReactLoading type='spinningBubbles' color='white' height={667} width={375} />

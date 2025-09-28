@@ -1,18 +1,22 @@
 const { expect } = require('chai');
-const RoomModel = require('../../schemas/room');
-const { getPawnPositionAfterMove, getStartPositions } = require('../../utils/functions');
+const RoomModel = require('../../models/room');
+const { getStartPositions } = require('../../utils/functions');
 describe('Testing room model methods', function () {
     const room = new RoomModel();
 
     beforeEach(function () {
         room.players = [];
         room.pawns = getStartPositions();
+        // Initialize pawn scores using the schema method
+        room.pawns.forEach(pawn => {
+            if (!pawn.score) pawn.score = 0;
+        });
     });
     it('should correctly beat pawn', function () {
         room.addPlayer('test1', 'red');
         room.addPlayer('test2', 'blue');
         room.pawns.forEach(pawn => {
-            pawn.position = getPawnPositionAfterMove(1, pawn);
+            pawn.position = pawn.getPositionAfterMove(1);
         });
         room.beatPawns(16, 'green');
         room.pawns.forEach(pawn => {
@@ -67,5 +71,45 @@ describe('Testing room model methods', function () {
         room.rolledNumber = 6;
         const pawnsThatCanMove = room.getPawnsThatCanMove();
         expect(pawnsThatCanMove.length).to.equal(4);
+    });
+
+    // Tests for pawn schema methods - using pawn.get methods instead of duplicating logic
+    it('should correctly get pawn score', function () {
+        const pawn = room.pawns[0];
+        expect(pawn.getScore()).to.equal(0);
+    });
+
+    it('should correctly add score to pawn', function () {
+        const pawn = room.pawns[0];
+        pawn.addScore(10);
+        expect(pawn.getScore()).to.equal(10);
+    });
+
+    it('should correctly reset pawn score', function () {
+        const pawn = room.pawns[0];
+        pawn.addScore(15);
+        expect(pawn.getScore()).to.equal(15);
+        pawn.resetScore();
+        expect(pawn.getScore()).to.equal(0);
+    });
+
+    it('should correctly check if pawn can move', function () {
+        const pawn = room.pawns[0];
+        // Pawn at base position should be able to move with 6
+        expect(pawn.canMove(6)).to.equal(true);
+        // Pawn at base position should not be able to move with 3
+        expect(pawn.canMove(3)).to.equal(false);
+        
+        // Move pawn out of base
+        pawn.position = 16;
+        // Should be able to move with any number that doesn't exceed finish line
+        expect(pawn.canMove(5)).to.equal(true);
+    });
+
+    it('should correctly get position after move for red pawn', function () {
+        const redPawn = room.pawns.find(pawn => pawn.color === 'red');
+        redPawn.position = 0;
+        expect(redPawn.getPositionAfterMove(6)).to.equal(16);
+        expect(redPawn.getPositionAfterMove(1)).to.equal(16);
     });
 });

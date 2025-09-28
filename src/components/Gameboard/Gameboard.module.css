@@ -18,3 +18,40 @@
     align-self: center;
     width: 200px;
 }
+
+/*Changes : Mobile toggle button styles */
+.mobileToggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1001;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 25px;
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.mobileToggle:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+.mobileToggle:active {
+    transform: translateY(0);
+}
+
+/*Changes : Hide toggle button on desktop */
+@media (min-width: 769px) {
+    .mobileToggle {
+        display: none !important;
+    }
+}
